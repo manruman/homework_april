@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+
+int generateRandomNumber(int min, int max) {
+    return rand() % (max - min + 1) + min;
+}
+
+int main() {
+    srand(time(0));
+
+    string playerName;
+    cout << "Welcome to the Brain Games!" << endl;
+    cout << "May I have your name? ";
+    cin >> playerName;
+    cout << "Hello, " << playerName << "!" << endl;
+
+    while (true) {
+        vector<int> progression;
+        int ratio = generateRandomNumber(2, 5); 
+        int hiddenIndex = generateRandomNumber(0, 9); 
+
+        
+        int start = generateRandomNumber(1, 10);
+        for (int i = 0; i < 10; ++i) {
+            progression.push_back(start * pow(ratio, i));
+        }
+
+        
+        int hiddenElement = progression[hiddenIndex];
+        progression[hiddenIndex] = -1;
+
+        
+        cout << "What number is missing in the progression?" << std::endl;
+        for (int i = 0; i < 10; ++i) {
+            if (progression[i] == -1) {
+                cout << ".. ";
+            } else {
+                cout << progression[i] << " ";
+            }
+        }
+        std::cout << std::endl;
+
+        
+        int playerGuess;
+        cout << "Your answer: ";
+        cin >> playerGuess;
+
+        
+        if (playerGuess == hiddenElement) {
+            cout << "Correct!" << std::endl;
+        } else {
+            cout << "'" << playerGuess << "' is wrong answer ;(. Correct answer was '" << hiddenElement << "'." << endl;
+            cout << "Let's try again, " << playerName << "!" << endl;
+            break;
+        }
+    }
+
+    return 0;
+}
