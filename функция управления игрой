@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+#include <functional>
+
+
+using GameRound = std::function<std::pair<std::string, std::string>()>;
+
+
+void gameEngine(const std::string& gameRule, GameRound gameRoundFunction) {
+    std::cout << "Welcome to the Brain Games!" << std::endl;
+    std::cout << "May I have your name? ";
+    std::string name;
+    std::cin >> name;
+    std::cout << "Hello, " << name << "!" << std::endl;
+    std::cout << gameRule << std::endl;
+
+    for (int round = 0; round < 3; round++) {
+        auto [question, correctAnswer] = gameRoundFunction();
+        std::cout << "Question: " << question << std::endl;
+        std::cout << "Your answer: ";
+        std::string userAnswer;
+        std::cin >> userAnswer;
+
+        if (userAnswer == correctAnswer) {
+            std::cout << "Correct!" << std::endl;
+        } else {
+            std::cout << "Wrong answer. The correct answer was '" << correctAnswer << "'. Let's try again, " << name << "!" << std::endl;
+            return;
+        }
+    }
+
+    std::cout << "Congratulations, " << name << "!" << std::endl;
+}
+
+}
