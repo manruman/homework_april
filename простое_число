@@ -1,0 +1,51 @@
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+
+bool isPrime(int number) {
+    if (number <= 1) return false;
+    for (int i = 2; i * i <= number; i++) {
+        if (number % i == 0) return false;
+    }
+    return true;
+}
+
+std::string toLowerCase(const std::string& str) {
+    std::string lowerCaseStr;
+    for (char c : str) {
+        lowerCaseStr += tolower(c);
+    }
+    return lowerCaseStr;
+}
+
+int main() {
+    srand(static_cast<unsigned int>(time(0)));
+
+    std::cout << "Welcome to the Brain Games!" << std::endl;
+    std::cout << "May I have your name? ";
+    std::string name;
+    std::cin >> name;
+    std::cout << "Hello, " << name << "!" << std::endl;
+    std::cout << "If given number is prime answer 'yes'? Otherwise answer 'no'." << std::endl;
+
+    for (int round = 0; round < 3; round++) {
+        int number = rand() % 100 + 1;
+        std::cout << "Question: " << number << std::endl;
+        std::cout << "Your answer: ";
+        std::string answer;
+        std::cin >> answer;
+        answer = toLowerCase(answer);
+
+        bool isCorrect = (answer == "yes" && isPrime(number)) || (answer == "no" && !isPrime(number));
+
+        if (isCorrect) {
+            std::cout << "Correct!" << std::endl;
+        } else {
+            std::cout << "Wrong answer. Let's try again, " << name << "!" << std::endl;
+            break; 
+        }
+    }
+
+    return 0;
+}
